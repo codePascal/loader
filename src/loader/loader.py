@@ -1,14 +1,11 @@
+import os.path
 import random
 import bs4
 import requests
 
-API_KEY = '9f1134e3-3878-4263-80db-76170259c3b0'
+import src.io.io as io
 
-USER_AGENTS_LIST = [
-    'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.83 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36'
-]
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "config")
 
 
 def fetch(url, identifier):
@@ -23,8 +20,8 @@ def get_request(url):
     try:
         return requests.get(url=url,
                             headers={
-                                'api_key': API_KEY,
-                                'User-Agent': random.choice(USER_AGENTS_LIST)}
+                                'api_key': get_api_key(),
+                                'User-Agent': get_rand_user_agent()}
                             )
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
@@ -59,3 +56,12 @@ def get_table_data(table):
     for row in rows[header + 1:]:
         data.append(get_row_data(row))
     return data
+
+
+def get_api_key():
+    return io.load_json(os.path.join(CONFIG_PATH, "api_key.json"))["api_key"]
+
+
+def get_rand_user_agent():
+    return random.choice(io.load_json(os.path.join(CONFIG_PATH, "user_agents.json"))["user_agents"])
+
