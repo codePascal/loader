@@ -1,9 +1,20 @@
 import unittest
 
-import loader.loader as loader
+from src.loader import loader as loader
 
 
 class TestLoader(unittest.TestCase):
+
+    def test_get_api_key(self):
+        self.assertEqual(loader.get_api_key(), "9f1134e3-3878-4263-80db-76170259c3b0")
+
+    def test_get_rand_user_agent(self):
+        self.assertTrue(loader.get_rand_user_agent() in [
+            "Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.83 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"
+        ])
+
     def test_request(self):
         url = 'https://motherfuckingwebsite.com/'
         req = loader.get_request(url)
