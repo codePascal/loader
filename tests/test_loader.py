@@ -1,6 +1,6 @@
 import unittest
 
-from src.loader import loader as loader
+from .context import loader
 
 
 class TestLoader(unittest.TestCase):
