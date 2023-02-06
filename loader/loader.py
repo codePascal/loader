@@ -3,9 +3,9 @@ import random
 import bs4
 import requests
 
-import src.io.io as io
+import loader.io as io
 
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "config")
+CONFIG_PATH = os.path.join(os.path.dirname(__file__))
 
 
 def fetch(url, identifier):
